@@ -1,1 +1,179 @@
 
+<html>
+  <head>    
+     <link rel="stylesheet" type="text/css" href="./css/reset.css">
+	 <link rel="stylesheet" type="text/css" href="./css/style.css">	 
+	 <style>		
+		#priceTable tr:last-child { border-top : 1px solid black }		
+		table { display: inline-block ;margin-right: 10px;}		
+		table:first-child {font-weight:bold;}
+		table td {text-align: center; padding : 10px;}
+		#priceTable td:first-child { font-size : 20px;}		
+		img {width:100px; height:100px;}
+				
+		.content { margin-top : 100px; text-align:center}
+		footer {text-align:right; margin-top:20px; padding:20px}
+		footer button { width: 100px}	
+	    #popup {background-color: yellow; width:200px; border : 1px solid black; display:none; position:absolute}
+		table { border : 1px solid black;}		
+		#howTable td { padding : 17px 0px}	
+		
+		caption {font-size : 20px;} 
+	 </style>
+  </head>
+  <body oncontextmenu="return false;"> 
+		<header class="title">
+			<span>Sungho's Shop</span>
+		</header>
+		<article class="content">	
+			<div>				
+				
+				<table id="priceTable">		
+					<caption>구매 가격</caption>							
+					<colgroup>
+						<col width="100px">
+						<col width="200px">						
+					</colgroup>					
+					<tr>
+						<td>사과</td>
+						<td id="apple"></td>
+					</tr>
+					<tr>
+						<td>오렌지</td>
+						<td id="orange"></td>
+					</tr>
+					<tr>
+						<td>바나나</td>
+						<td id="banana"></td>
+					</tr>
+					<tr >
+						<td>수박</td>
+						<td id="watermelon"></td>
+					</tr>
+					<tr>
+						<td>총액</td>
+						<td id="sum"></td>
+					</tr>
+				</table>
+
+			    <table id="howTable">		
+					<caption>구매 방법</caption>							
+					<colgroup>
+						<col width="150px">						
+						<col width="150px">	
+					</colgroup>					
+					<tr>
+						<td><input type="radio" name="how" value="1" checked></td>
+						<td>카드결제</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="how" value="2"></td>
+						<td>계좌이체</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="how" value="3"></td>
+						<td>휴대폰결제</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="how" value="4"></td>
+						<td>무통장입금</td>
+					</tr>
+				
+				</table>
+
+			
+
+			</div>
+
+			<div style="margin-top : 50px">
+				<table id="infoTable">
+					<caption>구매자정보</caption>							
+					<colgroup>
+						<col width="150px">						
+						<col width="150px">	
+					</colgroup>					
+					<tr>
+						<td>이름</td>
+						<td><input id="name" type="text"></td>
+					</tr>
+					<tr>
+						<td>학번</td>
+						<td><input id="hakbun" type="text"></td>
+					</tr>
+					
+				</table>
+				<button onclick="history.back(-1)">이전</button><button onclick="fnPayment()">결제</button>
+			</div>
+		</article>		
+  </body>
+  <div id="popup">구매수량을 입력해주세요</div>
+</html>
+
+
+<script type="text/javascript">  
+    var Request = function() {  
+        this.getParameter = function(name) {  
+            var rtnval = '';  
+            var nowAddress = unescape(location.href);  
+            var parameters = (nowAddress.slice(nowAddress.indexOf('?') + 1,  
+                    nowAddress.length)).split('&');  
+            for (var i = 0; i < parameters.length; i++) {  
+                var varName = parameters[i].split('=')[0];  
+                if (varName.toUpperCase() == name.toUpperCase()) {  
+                    rtnval = parameters[i].split('=')[1];  
+                    break;  
+                }  
+            }  
+            return rtnval;  
+        }  
+    }  
+
+    var request = new Request();  
+	
+	var apple = request.getParameter('apple') ? parseInt( request.getParameter('apple')) : 0;  
+	var orange = request.getParameter('orange') ? parseInt(request.getParameter('orange')) : 0;  
+	var banana = request.getParameter('banana') ? parseInt(request.getParameter('banana')) : 0;  
+	var watermelon = request.getParameter('watermelon') ? parseInt(request.getParameter('watermelon')) : 0;  
+	var hakbun = document.getElementById('hakbun');
+	var name = document.getElementById('name');
+	
+
+	document.querySelector("#apple").innerText = apple;
+	document.querySelector("#orange").innerText = orange;
+	document.querySelector("#banana").innerText = banana;
+	document.querySelector("#watermelon").innerText = watermelon;
+	document.querySelector("#sum").innerText = (apple + orange + banana + watermelon);
+	
+
+	hakbun.addEventListener('focusin', function(event){				
+		fnShowPopup(hakbun);
+	});
+
+	hakbun.addEventListener('focusout', function(){
+		fnHidePopup()
+	});
+
+	name.addEventListener('focusin', function(event){		
+		fnShowPopup(name);
+	});
+
+	name.addEventListener('focusout', function(){
+		fnHidePopup()	
+	});
+
+	function fnShowPopup(obj){		
+		popup.style.display = "block";
+		popup.style.top = obj.offsetTop + 520;
+		popup.style.left =  obj.offsetLeft + 320;
+	}
+
+	function fnHidePopup(){
+		popup.style.display = "none";		
+	}
+
+	function fnPayment(){
+		location.href = "ProductOrderConfirm.html?name=" + document.getElementById('name').value + "&hakbun=" + hakbun.value + "&sum=" + document.querySelector("#sum").innerText + "&how=" + document.querySelector("input[name=how]:checked").value;
+	}
+
+	
+</script>  
