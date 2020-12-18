@@ -1,1 +1,109 @@
 
+<html>
+  <head>    
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+     <link rel="stylesheet" type="text/css" href="./css/reset.css">
+	 <link rel="stylesheet" type="text/css" href="./css/style.css">	 
+	 <style>		
+		#priceTable tr:last-child { border-top : 1px solid black }		
+		table { display: inline-block ;margin-right: 10px;}		
+		table:first-child {font-weight:bold;}
+		table td {text-align: center; padding : 10px;}
+		#priceTable td:first-child { font-size : 20px;}		
+		img {width:100px; height:100px;}
+				
+		.content { margin-top : 100px; text-align:center}
+		footer {text-align:right; margin-top:20px; padding:20px}
+		footer button { width: 100px}	
+	    #popup {background-color: yellow; width:200px; border : 1px solid black; display:none; position:absolute}
+		table { border : 1px solid black;}		
+		#howTable td { padding : 17px 0px}	
+		
+		caption {font-size : 20px;} 
+	 </style>
+  </head>
+  <body oncontextmenu="return false;"> 
+		<header class="title">
+			<span>Sungho's Shop</span>
+		</header>
+		<article class="content">	
+			
+			<h1 style="font-size:50px;font-weight:bold">주문확인</h1>
+			<div style="margin-top : 50px">
+				<table id="infoTable">
+							
+					<colgroup>
+						<col width="150px">						
+						<col width="150px">	
+					</colgroup>					
+					<tr>
+						<td>이름</td>
+						<td id="name"></td>
+					</tr>
+					<tr>
+						<td>학번</td>
+						<td id="hakbun"></td>
+					</tr>
+					<tr>
+						<td>GithHub 주소</td>
+						<td><a href="https://github.com/kgyeongmi21">https://github.com/kgyeongmi21</a></td>
+					</tr>
+					<tr>
+						<td>총액</td>
+						<td id="sum"></td>
+					</tr>
+					<tr>
+						<td>구매방법</td>
+						<td id="how"></td>
+					</tr>
+
+					
+				</table>				
+			</div>
+			<div>
+				<button onclick="history.back(-1)">이전</button><button onclick="location.href='ProductSelect.html'">확인</button>
+			<div>
+
+		</article>		
+  </body>
+  <div id="popup">구매수량을 입력해주세요</div>
+</html>
+
+
+<script type="text/javascript">  
+    var Request = function() {  
+        this.getParameter = function(name) {  
+            var rtnval = '';  
+            var nowAddress = unescape(location.href);  
+            var parameters = (nowAddress.slice(nowAddress.indexOf('?') + 1,  
+                    nowAddress.length)).split('&');  
+            for (var i = 0; i < parameters.length; i++) {  
+                var varName = parameters[i].split('=')[0];  
+                if (varName.toUpperCase() == name.toUpperCase()) {  
+                    rtnval = parameters[i].split('=')[1];  
+                    break;  
+                }  
+            }  
+            return rtnval;  
+        }  
+    }  
+
+    var request = new Request();  
+	
+	
+
+	document.querySelector("#name").innerText = request.getParameter('name');
+	document.querySelector("#hakbun").innerText = request.getParameter('hakbun');
+	document.querySelector("#sum").innerText = request.getParameter('sum');
+	 
+
+	if( request.getParameter('how') == "1") document.querySelector("#how").innerText = "카드결제";
+	if( request.getParameter('how') == "2") document.querySelector("#how").innerText = "계좌이체";
+	if( request.getParameter('how') == "3") document.querySelector("#how").innerText = "휴대폰결제";
+	if( request.getParameter('how') == "4") document.querySelector("#how").innerText = "무통장입금";
+
+
+
+
+	
+</script>  
