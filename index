@@ -1,1 +1,20 @@
+<html>
+  <head>    
+     <link rel="stylesheet" type="text/css" href="./css/reset.css">
+	 <link rel="stylesheet" type="text/css" href="./css/style.css">	 
+  </head>
+  <body> 
+		<header class="title">
+			<span>Gyeongmi's Shop</span>
+		</header>
+		<article class="content" w3-include-html="./ProductSelect.html">	
+		</article>
+		<footer>
+			푸터
+		</footer>
+  </body>
+</html>
 
+<script>
+
+</script>
