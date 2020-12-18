@@ -1,0 +1,158 @@
+<html>
+  <head>    
+     <link rel="stylesheet" type="text/css" href="./css/reset.css">
+	 <link rel="stylesheet" type="text/css" href="./css/style.css">	 
+	 <style>
+		table {width: 100%;}
+		table:first-child {font-weight:bold;}
+		table td {text-align: center; padding : 10px;}
+		table td:first-child { font-size : 20px;}		
+		img {width:100px; height:100px;}
+		input {width:100px}		
+		.content { margin-top : 100px;}
+		footer {text-align:right; margin-top:20px; padding:20px}
+		footer button { width: 100px}	
+	    #popup {background-color: yellow; width:200px; border : 1px solid black; display:none; position:absolute}
+	 </style>
+  </head>
+  <body oncontextmenu="return false;"> 
+		<header class="title">
+			<span>Sungho's Shop</span>
+		</header>
+		<article class="content">	
+			<table>
+				<colgroup>
+					<col width="100px">
+					<col width="100px">
+					<col width="100px">
+					<col width="100px">
+					<col width="100px">
+				</colgroup>
+				<tr>
+					<td>상품</td>
+					<td>
+						<img onmouseover="fnScaleUp(this)" onmouseout="fnScaleDown(this)" src="https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile6.uf.tistory.com%2Fimage%2F2309BB3654B88179091D30" data-value="apple"><br>
+						사과
+					</td>
+					<td>
+						<img onmouseover="fnScaleUp(this)" onmouseout="fnScaleDown(this)" src="https://sc02.alicdn.com/kf/UTB8FpARpT_IXKJkSalUq6yBzVXal.jpg" data-value="orange"><br>
+						오렌지					
+					</td>
+					<td>
+						<img onmouseover="fnScaleUp(this)" onmouseout="fnScaleDown(this)" src="https://file.mk.co.kr/meet/neds/2018/07/image_readtop_2018_437247_15312913213383859.jpeg"><br>
+						바나나
+					</d>
+					<td>
+						<img onmouseover="fnScaleUp(this)" onmouseout="fnScaleDown(this)" src="https://www.shinsegaegroupinside.com/wp-content/uploads/2020/04/%ED%8A%B9%EC%84%B1%EC%9D%B4%EB%AF%B8%EC%A7%80_534_06-3.png"><br>
+						수박
+					</td>
+				</tr>
+				<tr>
+					<td>가격</td>
+					<td>1000</td>
+					<td>1500</td>
+					<td>3000</td>
+					<td>3000</td>
+				</tr>
+				<tr>
+					<td>수량</td>
+					<td id="apple">0</td>
+					<td id="orange">0</td>
+					<td id="banana"><input type="text"></td>
+					<td id="watermelon"><input type="text"></td>
+				</tr>
+			</table>
+			<footer>
+				<button onclick="fnPurchase()">구매</button>
+			</footer>
+			
+		</article>		
+  </body>
+  <div id="popup">구매수량을 입력해주세요</div>
+</html>
+
+<script>
+	
+	var apple = document.getElementById('apple');
+	var orange = document.getElementById('orange');
+	var banana = document.getElementById('banana');
+	var watermelon = document.getElementById('watermelon');
+	var popup = document.getElementById('popup');
+	var img = document.getElementsByTagName('img');
+
+	banana.addEventListener('focusin', function(event){				
+		fnShowPopup(banana);
+	});
+
+	banana.addEventListener('focusout', function(){
+		fnHidePopup()
+	});
+
+	watermelon.addEventListener('focusin', function(event){		
+		fnShowPopup(watermelon);
+	});
+
+	watermelon.addEventListener('focusout', function(){
+		fnHidePopup()	
+	});
+
+	for( var i = 0; i < img.length; i++){
+		img[i].addEventListener('mousedown', function(event){
+			
+			var value  = event.target.getAttribute('data-value');
+			if( value == 'apple'){
+				if( event.which == 1){
+					apple.innerText =  parseInt(apple.innerText) + 1 
+				}else if( event.which == 3){
+					if( parseInt(apple.innerText) > 0){
+						apple.innerText =  parseInt(apple.innerText) - 1
+					}
+				}
+				
+			}
+			else if( value == 'orange'){
+				if( event.which == 1){
+					orange.innerText =  parseInt(orange.innerText) + 1 
+				}else if( event.which == 3){
+					if( parseInt(orange.innerText) > 0){
+						orange.innerText =  parseInt(orange.innerText) - 1
+					}
+					
+				}
+			}			
+		});
+	}
+	
+
+	function fnScaleUp(obj){
+		obj.style.position = "absolute";
+		obj.style.top = obj.offsetTop - 100;
+		obj.style.left =  obj.offsetLeft - 100;
+		obj.style.width = "200px";
+		obj.style.height = "200px";
+	}	
+
+	function fnScaleDown(obj){
+		obj.style.position = null;
+		obj.style.top = null;
+		obj.style.left =  null;
+		obj.style.width = "100px";
+		obj.style.height = "100px";
+	}	
+	
+	function fnPurchase(){
+		location.href = "./ProductPurchase.html?apple=" + apple.innerText + "&orange=" + orange.innerText + "&banana=" + document.querySelector("#banana input").value + "&watermelon=" + document.querySelector("#watermelon input").value;
+	}
+
+	function fnShowPopup(obj){		
+		popup.style.display = "block";
+		popup.style.top = obj.offsetTop + 210;
+		popup.style.left =  obj.offsetLeft;
+	}
+
+	function fnHidePopup(){
+		popup.style.display = "none";		
+	}
+
+
+</script>
